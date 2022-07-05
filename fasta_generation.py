@@ -37,10 +37,11 @@ uniprot_id_dict = {
     "RPGRIP1L": "Q68CZ1",
     "NPHP4": "O75161"
 }
-# I created the dict in the with swapped key and values so this just swaps them, this is used later when adding the coventional names to the dataframe
-# If, in the future, the above uniprot_id_dict is updated to ("UNIPROT_ID": "HGNC NAME" ...) delete the following line of code
+# I created the dict in the with swapped key and values so this just swaps them,
+# this is used later when adding the conventional names to the dataframe.
+# If, in the future, the above uniprot_id_dict is updated to ("UNIPROT_ID": "HGNC NAME" ...)
+# delete the following line of code.
 uniprot_id_dict = dict([(value, key) for key, value in uniprot_id_dict.items()])
-
 
 # URL where the data is stored and a name for that data when we store it
 fasta_url = "https://raw.githubusercontent.com/nshaw928/FASTA/main/tz_proteins.fasta"
@@ -49,12 +50,10 @@ fasta_file_name = 'fasta_file_name.fasta'
 # Merging the data and file name into a file stored in the current directory
 urlretrieve(fasta_url, fasta_file_name)
 
-# Grabs the path of the current directory to be used at the end to return back to the current directory
+# Grabs the path of the current directory to be used at the end to return to the current directory
 home_path = os.getcwd()
 
-
-
-### Parse the FASTA File containing all proteins to seperate them into a dictionary containing UNIPROT_ID: SEQUENCE, ###
+# Parse the FASTA File containing all proteins to separate them into a dictionary containing UNIPROT_ID: SEQUENCE,
 
 # Open the data file and save in var fasta_file for use
 fasta_file = open('fasta_file_name.fasta')
@@ -86,20 +85,20 @@ for key, value in sequences_dict.items():
     temp_key = temp_key[1]
     temp_sequences_dict[temp_key] = value
 
-# Save over the previous dictionary with the messy keys to our one with the simplied keys
+# Save over the previous dictionary with the messy keys to our one with the simplified keys
 sequences_dict = temp_sequences_dict
 
 
-### Create DataFrame with id, sequence, sequence_length, and name ###
+# Create DataFrame with id, sequence, sequence_length, and name
 
 # Define the DataFrame that our sequence data will be stored in
-sequence_database = pd.DataFrame({'id':[], 'sequence':[],})
+sequence_database = pd.DataFrame({'id': [], 'sequence': [], })
 sequence_database.head()
 
 # Fill DataFrame with our data
 for key, value in sequences_dict.items():
     temp_dict = {'id': key, 'sequence': value}
-    sequence_database = sequence_database.append(temp_dict, ignore_index = True)
+    sequence_database = sequence_database.append(temp_dict, ignore_index=True)
 
 # Adds sequence_length column
 sequence_database['sequence_length'] = sequence_database['sequence'].str.len()
@@ -108,11 +107,10 @@ sequence_database['sequence_length'] = sequence_database['sequence'].str.len()
 sequence_database['name'] = sequence_database['id'].map(uniprot_id_dict)
 
 
-
-### Function to write FASTA files ###
+# Function to write FASTA files
 
 # Define Function
-def write_fasta(data_dict, generate_dimers = False):
+def write_fasta(data_dict, generate_dimers=False):
     """
     Takes a dictionary as input and outputs a FASTA formatted file.
 
@@ -122,14 +120,13 @@ def write_fasta(data_dict, generate_dimers = False):
 
     # Sets file name and opens the file for modification
     file_name = []
-    output_path = ''
     for key, value in data_dict.items():
         file_name.append(key)
         if generate_dimers and len(data_dict) == 1:
             file_name.append(key)
     file_name = '_'.join(file_name)
     output_path = file_name + '.fasta'
-    output_file = open(output_path,'w')
+    output_file = open(output_path, 'w')
 
     # Modifying the output file, adding the identifier lines and sequences
     for key, value in data_dict.items():
@@ -137,8 +134,8 @@ def write_fasta(data_dict, generate_dimers = False):
         output_file.write(identifier_line)
         sequence_line = value + '\n'
         output_file.write(sequence_line)
-        # This is for if you want to generate FASTA files for prediction of dimers as well, the value can be changed to true when
-        # calling the function
+        # This is for if you want to generate FASTA files for prediction of dimers as well,
+        # the value can be changed to true when calling the function
         if generate_dimers and len(data_dict) == 1:
             identifier_line = ">" + key + "\n"
             output_file.write(identifier_line)
@@ -149,46 +146,47 @@ def write_fasta(data_dict, generate_dimers = False):
     output_file.close()
 
 
-### Function that splits DataFrame into all pairs ###
+# Function that splits DataFrame into all pairs
 
 # Define Function
-def generate_pairs_and_save_fastas(df, dimers = False):
+def generate_pairs_and_save_fastas(df, dimers=False):
     """
     Takes a dataframe as input and outputs a FASTA formatted files for every pair combination of proteins.
 
-    The other argument taken by the function is dimers, which is set to false by default which will not allow the same protein to be printed twice in one FASTA file.
-    However, if set to true one protein will be printed twice in one FASTA file, allowing AlphaFold to predict a potential dimer interface.
+    The other argument taken by the function is dimers, which is set to false by default which will not allow the same
+    protein to be printed twice in one FASTA file.
+    However, if set to true one protein will be printed twice in one FASTA file, allowing AlphaFold to predict a
+    potential dimer interface.
 
-    The input dataframe must contain collumns 'id' and 'sequence' for this code to work accurately without modification.
+    The input dataframe must contain columns 'id' and 'sequence' for this code to work accurately without modification.
     This function is dependent on the write_fasta function written above.
 
     The functional also prints out how many files it creates.
     """
     count = 0
     # Loops through all proteins in dataframe
-    for first_element_index in range(0,len(df)):
+    for first_element_index in range(0, len(df)):
         first_element = {df.loc[first_element_index, 'id']: df.loc[first_element_index, 'sequence']}
         # Loops through all proteins in dataframe, pairing every protein with every other protein
         for second_element_index in range(first_element_index, len(df)):
             second_element = {df.loc[second_element_index, 'id']: df.loc[second_element_index, 'sequence']}
             # Combines the first protein key/value pair with the second protein key/value pair
-            both_elements = dict(first_element,**second_element)
+            both_elements = dict(first_element, **second_element)
             count += 1
             # Utilizes the write_fasta function to write the two proteins into one FASTA file
-            write_fasta(both_elements, generate_dimers = dimers)
+            write_fasta(both_elements, generate_dimers=dimers)
     print(count)
     
-    
-    
-### Creates folder for results and changes to that folder ###
+
+# Creates folder for results and changes to that folder
 now = datetime.datetime.now()
 newpath = (now.strftime("%H_%M_%m_%d_%Y"))
 os.makedirs(newpath)
 os.chdir(newpath)
 
 
-### This block is simply for running the functions above ###
-generate_pairs_and_save_fastas(sequence_database, dimers = True)
+# This block is simply for running the functions above
+generate_pairs_and_save_fastas(sequence_database, dimers=True)
 
 # Changes back to home directory
 os.chdir(home_path)
