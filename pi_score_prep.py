@@ -3,6 +3,7 @@ import pandas as pd
 import os
 import datetime
 import shutil
+import json
 
 # Create new folder for saving results and save paths to relevant datasets
 # Open dataset folder and create folder to save results
@@ -39,9 +40,8 @@ for file in os.listdir(fasta_data_path):
     temp_df = pd.DataFrame([temp_dict])
     pi_df = pd.concat([pi_df, temp_df], ignore_index=True)
 
-# Check each set of proteins to make sure the run completed, check for "ranked_0,1,2,3,4"
+# Saved ranked pdbs in new folder with name protA_protB_#.pdb (created earlier)
 for folder in os.listdir(results_data_path):
-    print('loop')
     if os.path.exists(results_data_path + '\\' + folder + '\\ranked_0.pdb'):
         shutil.copyfile(results_data_path + '\\' + folder + '\\ranked_0.pdb', save_folder_path + '\\ranked_0.pdb')
         new_file_name = '\\' + folder + '_0.pdb'
@@ -65,4 +65,8 @@ for folder in os.listdir(results_data_path):
     else:
         pass
 
-# Create New Dataset with only the pdb, named with proteins and total alignment error (A_B_TAE)
+# Update pi_df with rankings for each protein set and their pLDDT score
+# Add rows to pi_df for each rank of protein
+print(pi_df.head())
+
+#
