@@ -4,22 +4,20 @@ import os
 import datetime
 import shutil
 
+# Create new folder for saving results and save paths to relevant datasets
 # Open dataset folder and create folder to save results
 os.chdir('datasets')
 datasets_path = os.getcwd()
-
 # Save path to folder for copying our ranked pdbs
-#now = datetime.datetime.now()
-#newpath = (now.strftime("%H_%M_%m_%d_%Y"))
-#os.makedirs(newpath)
-#os.chdir(newpath)
-#save_folder_path = os.getcwd()
-
+now = datetime.datetime.now()
+newpath = (now.strftime("%H_%M_%m_%d_%Y"))
+os.makedirs(newpath)
+os.chdir(newpath)
+save_folder_path = os.getcwd()
 # Save path to folder of AlphaFold result folders
 os.chdir(datasets_path)
 os.chdir('test_results')
 results_data_path = os.getcwd()
-
 # Save path to folder of FASTA files
 os.chdir(datasets_path)
 os.chdir('test_data')
@@ -39,10 +37,32 @@ for file in os.listdir(fasta_data_path):
     # Create dict with prot names and add to pi_df
     temp_dict = {'protA_protB': protA_protB, 'protA': protA, 'protB': protB}
     temp_df = pd.DataFrame([temp_dict])
-    pi_df = pd.concat([pi_df, temp_df], ignore_index=True)\
-print(pi_df.head())
+    pi_df = pd.concat([pi_df, temp_df], ignore_index=True)
 
 # Check each set of proteins to make sure the run completed, check for "ranked_0,1,2,3,4"
-
+for folder in os.listdir(results_data_path):
+    print('loop')
+    if os.path.exists(results_data_path + '\\' + folder + '\\ranked_0.pdb'):
+        shutil.copyfile(results_data_path + '\\' + folder + '\\ranked_0.pdb', save_folder_path + '\\ranked_0.pdb')
+        new_file_name = '\\' + folder + '_0.pdb'
+        os.rename(save_folder_path + '\\ranked_0.pdb', save_folder_path + new_file_name)
+    if os.path.exists(results_data_path + '\\' + folder + '\\ranked_1.pdb'):
+        shutil.copyfile(results_data_path + '\\' + folder + '\\ranked_1.pdb', save_folder_path + '\\ranked_1.pdb')
+        new_file_name = '\\' + folder + '_1.pdb'
+        os.rename(save_folder_path + '\\ranked_1.pdb', save_folder_path + new_file_name)
+    if os.path.exists(results_data_path + '\\' + folder + '\\ranked_2.pdb'):
+        shutil.copyfile(results_data_path + '\\' + folder + '\\ranked_2.pdb', save_folder_path + '\\ranked_2.pdb')
+        new_file_name = '\\' + folder + '_2.pdb'
+        os.rename(save_folder_path + '\\ranked_2.pdb', save_folder_path + new_file_name)
+    if os.path.exists(results_data_path + '\\' + folder + '\\ranked_3.pdb'):
+        shutil.copyfile(results_data_path + '\\' + folder + '\\ranked_3.pdb', save_folder_path + '\\ranked_3.pdb')
+        new_file_name = '\\' + folder + '_3.pdb'
+        os.rename(save_folder_path + '\\ranked_3.pdb', save_folder_path + new_file_name)
+    if os.path.exists(results_data_path + '\\' + folder + '\\ranked_4.pdb'):
+        shutil.copyfile(results_data_path + '\\' + folder + '\\ranked_4.pdb', save_folder_path + '\\ranked_4.pdb')
+        new_file_name = '\\' + folder + '_4.pdb'
+        os.rename(save_folder_path + '\\ranked_4.pdb', save_folder_path + new_file_name)
+    else:
+        pass
 
 # Create New Dataset with only the pdb, named with proteins and total alignment error (A_B_TAE)
