@@ -33,10 +33,13 @@ for file in os.listdir(fasta_data_path):
     # Save file name as string
     filename = file
     # Get rid of .fasta
-    filename = filename.split('.')
-    protA_protB_label = filename
-    print(filename)
-    print(type(filename))
+    protA_protB = filename.split('.')[0]
+    protA = protA_protB.split('_')[0]
+    protB = protA_protB.split('_')[1]
+    temp_dict = {'protA_protB': protA_protB, 'protA': protA, 'protB': protB}
+    temp_df = pd.DataFrame([temp_dict])
+    pi_df = pd.concat([pi_df, temp_df], ignore_index=True)\
+print(pi_df.head())
     # Save protA_protB to df
 
     # Separate protA and protB and save to df
