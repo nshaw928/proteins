@@ -15,8 +15,8 @@ os.chdir(newpath)
 save_folder_path = os.getcwd()
 
 # Create DataFrame using test data set to check for AlphaFold success or which ones need run again
-protein_interaction_database = pd.DataFrame({'id': [], 'sequence': [], })
-sequence_database.head()
+pi_df = pd.DataFrame({'protA_protB': [], 'protA': [], 'protB': [], 'rank': [], 'pLDDT': []})
+pi_df.head()
 
 # Check each set of proteins to make sure the run completed, check for "ranked_0,1,2,3,4"
 
