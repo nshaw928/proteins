@@ -31,7 +31,7 @@ pi_df = pd.DataFrame({'protA_protB': [], 'protA': [], 'protB': [], 'rank': [], '
 # Populate protA_protB, protA, and protB from the fasta files
 for file in os.listdir(fasta_data_path):
     # Save file name as string
-
+    filename = file
     # Get rid of .fasta
 
     # Save protA_protB to df
