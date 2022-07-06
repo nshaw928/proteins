@@ -9,11 +9,11 @@ os.chdir('datasets')
 datasets_path = os.getcwd()
 
 # Save path to folder for copying our ranked pdbs
-now = datetime.datetime.now()
-newpath = (now.strftime("%H_%M_%m_%d_%Y"))
-os.makedirs(newpath)
-os.chdir(newpath)
-save_folder_path = os.getcwd()
+#now = datetime.datetime.now()
+#newpath = (now.strftime("%H_%M_%m_%d_%Y"))
+#os.makedirs(newpath)
+#os.chdir(newpath)
+#save_folder_path = os.getcwd()
 
 # Save path to folder of AlphaFold result folders
 os.chdir(datasets_path)
@@ -33,7 +33,10 @@ for file in os.listdir(fasta_data_path):
     # Save file name as string
     filename = file
     # Get rid of .fasta
-
+    filename = filename.split('.')
+    protA_protB_label = filename
+    print(filename)
+    print(type(filename))
     # Save protA_protB to df
 
     # Separate protA and protB and save to df
