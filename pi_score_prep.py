@@ -10,8 +10,9 @@ import json
 os.chdir('datasets')
 datasets_path = os.getcwd()
 # Save path to folder for copying our ranked pdbs
-now = datetime.datetime.now()
-newpath = (now.strftime("%H_%M_%m_%d_%Y"))
+#now = datetime.datetime.now()
+#newpath = (now.strftime("%H_%M_%m_%d_%Y"))
+newpath = 'pdbs_for_pi_scoring'
 os.makedirs(newpath)
 os.chdir(newpath)
 save_folder_path = os.getcwd()
@@ -66,7 +67,44 @@ for folder in os.listdir(results_data_path):
         pass
 
 # Update pi_df with rankings for each protein set and their pLDDT score
-# Add rows to pi_df for each rank of protein
-print(pi_df.head())
+# Updates pi_df with rank 0 for proteins that have completed the AlphaFold run
+for file in os.listdir(save_folder_path):
+    temp_both_prots = file.split('_')[0] + '_' + file.split('_')[1]
+    for index in pi_df.index:
+        if pi_df.loc[index, 'protA_protB'] == temp_both_prots:
+            pi_df.loc[index, 'rank'] = '0'
+        else:
+            pass
 
-#
+# Create alternative dataframes that will be concat together
+pi_df_0 = pi_df
+pi_df_1 = pi_df
+pi_df_2 = pi_df
+pi_df_3 = pi_df
+pi_df_4 = pi_df
+
+# Add ranks 1-4 for rows with rank 0
+for index in pi_df_1.index:
+    if pi_df_1.loc[index, 'rank'] == '0':
+        pi_df_1.loc[index, 'rank'] = '1'
+    else:
+        pass
+for index in pi_df_2.index:
+    if pi_df_2.loc[index, 'rank'] == '1':
+        pi_df_2.loc[index, 'rank'] = '2'
+    else:
+        pass
+for index in pi_df_3.index:
+    if pi_df_3.loc[index, 'rank'] == '2':
+        pi_df_3.loc[index, 'rank'] = '3'
+    else:
+        pass
+for index in pi_df_4.index:
+    if pi_df_4.loc[index, 'rank'] == '3':
+        pi_df_4.loc[index, 'rank'] = '4'
+    else:
+        pass
+
+pi_df = pd.concat([pi_df_0, pi_df_1, pi_df_2, pi_df_3, pi_df_4], ignore_index=True)
+
+print(pi_df)
