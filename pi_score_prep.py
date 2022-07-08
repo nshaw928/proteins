@@ -10,9 +10,9 @@ import json
 os.chdir('datasets')
 datasets_path = os.getcwd()
 # Save path to folder for copying our ranked pdbs
-#now = datetime.datetime.now()
-#newpath = (now.strftime("%H_%M_%m_%d_%Y"))
-newpath = 'pdbs_for_pi_scoring'
+now = datetime.datetime.now()
+newpath = (now.strftime("%H_%M_%m_%d_%Y"))
+#newpath = 'pdbs_for_pi_scoring'
 os.makedirs(newpath)
 os.chdir(newpath)
 save_folder_path = os.getcwd()
