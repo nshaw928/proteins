@@ -89,7 +89,7 @@ for index in pi_df.index:
         temp_df = pd.DataFrame([temp_dict_1, temp_dict_2, temp_dict_3, temp_dict_4])
         pi_df = pd.concat([pi_df, temp_df], ignore_index=True)
 
-# Parse ranking_debug.json for PLDDT scores
+# Parse ranking_debug.json for PLDDT scores and add to pi_df
 for index in pi_df.index:
     if pi_df.loc[index, 'rank'] == '0':
         with open(results_data_path + '\\' + pi_df.loc[index, 'protA_protB'] + '\\' + 'ranking_debug.json') as ranking_json:
