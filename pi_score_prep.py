@@ -99,10 +99,18 @@ for index in pi_df.index:
             ranks.append(list(ranking_data.values())[0:5])
             ranks = ranks[0]
             ranks.sort(reverse=True)
-            temp_dict_0 = {'protA_protB': pi_df.loc[index, 'protA_protB'], 'rank': '0', 'PLDDT': ranks[0]}
-            temp_dict_1 = {'protA_protB': pi_df.loc[index, 'protA_protB'], 'rank': '1', 'PLDDT': ranks[1]}
-            temp_dict_2 = {'protA_protB': pi_df.loc[index, 'protA_protB'], 'rank': '2', 'PLDDT': ranks[2]}
-            temp_dict_3 = {'protA_protB': pi_df.loc[index, 'protA_protB'], 'rank': '3', 'PLDDT': ranks[3]}
-            temp_dict_4 = {'protA_protB': pi_df.loc[index, 'protA_protB'], 'rank': '4', 'PLDDT': ranks[4]}
-            temp_df = pd.DataFrame([temp_dict_0, temp_dict_1, temp_dict_2, temp_dict_3, temp_dict_4])
-            print(temp_df)
+            for index2 in pi_df.index:
+                if pi_df.loc[index2, 'rank'] == '0' and (pi_df.loc[index2, 'protA_protB'] == pi_df.loc[index, 'protA_protB']):
+                    pi_df.loc[index2, 'pLDDT'] = ranks[0]
+                if pi_df.loc[index2, 'rank'] == '1' and (pi_df.loc[index2, 'protA_protB'] == pi_df.loc[index, 'protA_protB']):
+                    pi_df.loc[index2, 'pLDDT'] = ranks[1]
+                if pi_df.loc[index2, 'rank'] == '2' and (pi_df.loc[index2, 'protA_protB'] == pi_df.loc[index, 'protA_protB']):
+                    pi_df.loc[index2, 'pLDDT'] = ranks[2]
+                if pi_df.loc[index2, 'rank'] == '3' and (pi_df.loc[index2, 'protA_protB'] == pi_df.loc[index, 'protA_protB']):
+                    pi_df.loc[index2, 'pLDDT'] = ranks[3]
+                if pi_df.loc[index2, 'rank'] == '4' and (pi_df.loc[index2, 'protA_protB'] == pi_df.loc[index, 'protA_protB']):
+                    pi_df.loc[index2, 'pLDDT'] = ranks[4]
+                else:
+                    pass
+
+            print(pi_df)
