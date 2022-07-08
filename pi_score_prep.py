@@ -75,7 +75,7 @@ for file in os.listdir(save_folder_path):
             pi_df.loc[index, 'rank'] = '0'
         else:
             pass
-
+# Add ranks 1,2,3,4 for all proteins in which AlphaFold completed run
 for index in pi_df.index:
     if pi_df.loc[index, 'rank'] == '0':
         temp_dict_1 = {'protA_protB': pi_df.loc[index, 'protA_protB'], 'protA': pi_df.loc[index, 'protA'],
@@ -89,5 +89,20 @@ for index in pi_df.index:
         temp_df = pd.DataFrame([temp_dict_1, temp_dict_2, temp_dict_3, temp_dict_4])
         pi_df = pd.concat([pi_df, temp_df], ignore_index=True)
 
-
-print(pi_df)
+# Parse ranking_debug.json for PLDDT scores
+for index in pi_df.index:
+    if pi_df.loc[index, 'rank'] == '0':
+        with open(results_data_path + '\\' + pi_df.loc[index, 'protA_protB'] + '\\' + 'ranking_debug.json') as ranking_json:
+            ranking_data = json.load(ranking_json)
+            ranking_data = list(ranking_data.values())[0]
+            ranks = []
+            ranks.append(list(ranking_data.values())[0:5])
+            ranks = ranks[0]
+            ranks.sort(reverse=True)
+            temp_dict_0 = {'protA_protB': pi_df.loc[index, 'protA_protB'], 'rank': '0', 'PLDDT': ranks[0]}
+            temp_dict_1 = {'protA_protB': pi_df.loc[index, 'protA_protB'], 'rank': '1', 'PLDDT': ranks[1]}
+            temp_dict_2 = {'protA_protB': pi_df.loc[index, 'protA_protB'], 'rank': '2', 'PLDDT': ranks[2]}
+            temp_dict_3 = {'protA_protB': pi_df.loc[index, 'protA_protB'], 'rank': '3', 'PLDDT': ranks[3]}
+            temp_dict_4 = {'protA_protB': pi_df.loc[index, 'protA_protB'], 'rank': '4', 'PLDDT': ranks[4]}
+            temp_df = pd.DataFrame([temp_dict_0, temp_dict_1, temp_dict_2, temp_dict_3, temp_dict_4])
+            print(temp_df)
