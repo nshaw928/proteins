@@ -76,35 +76,18 @@ for file in os.listdir(save_folder_path):
         else:
             pass
 
-# Create alternative dataframes that will be concat together
-pi_df_0 = pi_df
-pi_df_1 = pi_df
-pi_df_2 = pi_df
-pi_df_3 = pi_df
-pi_df_4 = pi_df
+for index in pi_df.index:
+    if pi_df.loc[index, 'rank'] == '0':
+        temp_dict_1 = {'protA_protB': pi_df.loc[index, 'protA_protB'], 'protA': pi_df.loc[index, 'protA'],
+                       'protB': pi_df.loc[index, 'protB'], 'rank': '1'}
+        temp_dict_2 = {'protA_protB': pi_df.loc[index, 'protA_protB'], 'protA': pi_df.loc[index, 'protA'],
+                       'protB': pi_df.loc[index, 'protB'], 'rank': '2'}
+        temp_dict_3 = {'protA_protB': pi_df.loc[index, 'protA_protB'], 'protA': pi_df.loc[index, 'protA'],
+                       'protB': pi_df.loc[index, 'protB'], 'rank': '3'}
+        temp_dict_4 = {'protA_protB': pi_df.loc[index, 'protA_protB'], 'protA': pi_df.loc[index, 'protA'],
+                       'protB': pi_df.loc[index, 'protB'], 'rank': '4'}
+        temp_df = pd.DataFrame([temp_dict_1, temp_dict_2, temp_dict_3, temp_dict_4])
+        pi_df = pd.concat([pi_df, temp_df], ignore_index=True)
 
-# Add ranks 1-4 for rows with rank 0
-for index in pi_df_1.index:
-    if pi_df_1.loc[index, 'rank'] == '0':
-        pi_df_1.loc[index, 'rank'] = '1'
-    else:
-        pass
-for index in pi_df_2.index:
-    if pi_df_2.loc[index, 'rank'] == '1':
-        pi_df_2.loc[index, 'rank'] = '2'
-    else:
-        pass
-for index in pi_df_3.index:
-    if pi_df_3.loc[index, 'rank'] == '2':
-        pi_df_3.loc[index, 'rank'] = '3'
-    else:
-        pass
-for index in pi_df_4.index:
-    if pi_df_4.loc[index, 'rank'] == '3':
-        pi_df_4.loc[index, 'rank'] = '4'
-    else:
-        pass
-
-pi_df = pd.concat([pi_df_0, pi_df_1, pi_df_2, pi_df_3, pi_df_4], ignore_index=True)
 
 print(pi_df)
