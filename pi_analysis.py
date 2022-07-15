@@ -1,5 +1,13 @@
-# Save path to get to PI results folder
+# Import packages
+import pandas as pd
+import os
 
+# Get paths for necessary folders
+os.chdir('datasets')
+datasets_path = os.getcwd()
+# Save path for PI score results
+os.chdir(piscore_result)
+piscore_result_path = os.getcwd()
 
 # Get df
 
