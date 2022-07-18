@@ -4,14 +4,16 @@ import os
 import shutil
 import json
 
-# Check for datasets folder, and if it does not exist make it
+# Check for data folder, and if it does not exist make it
 first_time = True
 home_path = os.getcwd()
-for item in home_path:
+# Check for presence of data folder
+for item in os.listdir(home_path):
     if home_path + '\\' + item == home_path + '\\' + 'data':
         first_time = False
     else:
         pass
+# If the data folder does not exist make it and the other sub folders
 if first_time:
     os.makedirs('data')
     os.chdir('data')
@@ -205,3 +207,6 @@ def generate_fastas():
 
 
 # Function adds results of PI scoring to df
+
+# Run functions
+# generate_fastas()
