@@ -92,19 +92,19 @@ sequences_dict = temp_sequences_dict
 # Create DataFrame with id, sequence, sequence_length, and name
 
 # Define the DataFrame that our sequence data will be stored in
-sequence_database = pd.DataFrame({'id': [], 'sequence': [], })
-sequence_database.head()
+df = pd.DataFrame({'id': [], 'sequence': [], })
+df.head()
 
 # Fill DataFrame with our data
 for key, value in sequences_dict.items():
     temp_dict = {'id': key, 'sequence': value}
-    sequence_database = sequence_database.append(temp_dict, ignore_index=True)
+    df = df.append(temp_dict, ignore_index=True)
 
 # Adds sequence_length column
-sequence_database['sequence_length'] = sequence_database['sequence'].str.len()
+df['sequence_length'] = df['sequence'].str.len()
 
 # Adds conventional names from the UniProt ID Dictionary I manually defined in the first block
-sequence_database['name'] = sequence_database['id'].map(uniprot_id_dict)
+df['name'] = df['id'].map(uniprot_id_dict)
 
 
 # Function to write FASTA files
@@ -186,7 +186,7 @@ os.chdir(newpath)
 
 
 # This block is simply for running the functions above
-generate_pairs_and_save_fastas(sequence_database, dimers=True)
+generate_pairs_and_save_fastas(df, dimers=True)
 
 # Changes back to home directory
 os.chdir(home_path)
