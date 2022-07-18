@@ -235,7 +235,7 @@ def generate_pdbs():
     # Update df with rankings for each protein set and their pLDDT score
     # Updates df with rank 0 for proteins that have completed the AlphaFold run
     for file in os.listdir(piscore_data_path):
-        temp_both_prots = file.split('_')[0] + '_' + file.split('_')[1]
+        temp_both_prots = file.split('.')[0]
         for index in df.index:
             if df.loc[index, 'protA_protB'] == temp_both_prots:
                 df.loc[index, 'rank'] = '0'
