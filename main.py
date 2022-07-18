@@ -13,14 +13,20 @@ for item in home_path:
     else:
         pass
 if first_time:
-   os.makedirs('data')
-   os.chdir('data')
-   dirs = ['fasta_initial', 'fasta_result', 'alphafold_result', 'piscore_data', 'piscore_result']
-   for dir in dirs:
+    os.makedirs('data')
+    os.chdir('data')
+    dirs = ['fasta_initial', 'fasta_result', 'alphafold_result', 'piscore_data', 'piscore_result']
+    for dir in dirs:
        os.makedirs(dir)
+    os.chdir(home_path)
 
 # Set path variables
-
+data_path = home_path + '\\data'
+fasta_initial_path = data_path + '\\fasta_initial'
+fasta_result_path = data_path + '\\fasta_result'
+alphafold_result_path = data_path + '\\alphafold_result'
+piscore_data_path = data_path + '\\piscore_data'
+piscore_result_path = data_path + '\\piscore_result'
 
 # Check datasets for stage of project
 
