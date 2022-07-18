@@ -74,7 +74,6 @@ def generate_fastas():
     uniprot_id_dict = dict([(value, key) for key, value in uniprot_id_dict.items()])
 
     # Load fasta file
-
     fasta_file = open(fasta_initial_path + '\\' + 'file.fasta')
 
     # Define variables for use later
@@ -268,8 +267,25 @@ def generate_pdbs():
     # Save df as csv to be used later
     df.to_csv(data_path + '\\pre_piscore.csv')
 
-# Function adds results of PI scoring to df
 
+# Function adds results of PI scoring to df
+def piscore_extract():
+    # Load df from CSV
+    df = pd.read_csv(data_path + '\\pre_piscore.csv')
+    print(df)
+
+    for folder in os.listdir(piscore_result_path):
+        for item in os.listdir(piscore_result_path + '\\' + folder):
+            temp_path = piscore_result_path + '\\' + folder
+            isdir = os.path.isdir(temp_path + '\\' + item)
+            if isdir:
+                for thing in os.listdir(piscore_result_path + '\\' + folder + '\\' + item):
+                    temp_path = piscore_result_path + '\\' + folder + '\\' + item
+                    isdir = os.path.isdir(temp_path + '\\' + thing)
+                    if isdir:
+                        print(temp_path + '\\' + thing)
+            else:
+                pass
 # Run functions
 #generate_fastas()
 #generate_pdbs()
