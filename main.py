@@ -232,13 +232,6 @@ def generate_pdbs():
         else:
             pass
 
-    print(df)
-    # Renames files to index value in df
-    for file in os.listdir(piscore_data_path):
-        for index in df.index:
-            if file.split('.')[0] == df.loc[index, 'protA_protB']:
-                os.rename(piscore_data_path + '\\' + file, piscore_data_path + '\\' + str(index) + '.pdb')
-
     # Update df with rankings for each protein set and their pLDDT score
     # Updates df with rank 0 for proteins that have completed the AlphaFold run
     for file in os.listdir(piscore_data_path):
@@ -248,6 +241,12 @@ def generate_pdbs():
                 df.loc[index, 'rank'] = '0'
             else:
                 pass
+
+    # Renames files to index value in df
+    for file in os.listdir(piscore_data_path):
+        for index in df.index:
+            if file.split('.')[0] == df.loc[index, 'protA_protB']:
+                os.rename(piscore_data_path + '\\' + file, piscore_data_path + '\\' + str(index) + '.pdb')
 
     # Parse ranking_debug.json for PLDDT scores and add to df
     for index in df.index:
@@ -265,8 +264,9 @@ def generate_pdbs():
                         df.loc[index2, 'pLDDT'] = ranks[0]
                     else:
                         pass
-
     print(df)
+    # Save df as csv to be used later
+    df.to_csv(data_path + '\\pre_piscore.csv')
 
 # Function adds results of PI scoring to df
 
