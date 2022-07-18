@@ -16,8 +16,8 @@ if first_time:
     os.makedirs('data')
     os.chdir('data')
     dirs = ['fasta_initial', 'fasta_result', 'alphafold_result', 'piscore_data', 'piscore_result']
-    for dir in dirs:
-       os.makedirs(dir)
+    for folder in dirs:
+        os.makedirs(folder)
     os.chdir(home_path)
 
 # Set path variables
@@ -121,11 +121,13 @@ def generate_fastas():
     # Adds conventional names from the UniProt ID Dictionary I manually defined in the first block
     df['name'] = df['id'].map(uniprot_id_dict)
 
+    # Save df as CSV
+    df.to_csv(data_path + '\\generate_fastas.csv')
+
     # Function to write FASTA files
-
-
     # Define Function
     def write_fasta(data_dict, generate_dimers=False):
+
         """
         Takes a dictionary as input and outputs a FASTA formatted file.
 
@@ -161,9 +163,8 @@ def generate_fastas():
         output_file.close()
 
     # Function that splits DataFrame into all pairs
-
     # Define Function
-    def generate_pairs_and_save_fastas(df, dimers=False):
+    def generate_pairs_and_save_fastas(dataframe, dimers=False):
         """
         Takes a dataframe as input and outputs a FASTA formatted files for every pair combination of proteins.
 
@@ -179,11 +180,11 @@ def generate_fastas():
         """
         count = 0
         # Loops through all proteins in dataframe
-        for first_element_index in range(0, len(df)):
-            first_element = {df.loc[first_element_index, 'id']: df.loc[first_element_index, 'sequence']}
+        for first_element_index in range(0, len(dataframe)):
+            first_element = {dataframe.loc[first_element_index, 'id']: dataframe.loc[first_element_index, 'sequence']}
             # Loops through all proteins in dataframe, pairing every protein with every other protein
-            for second_element_index in range(first_element_index, len(df)):
-                second_element = {df.loc[second_element_index, 'id']: df.loc[second_element_index, 'sequence']}
+            for second_element_index in range(first_element_index, len(dataframe)):
+                second_element = {dataframe.loc[second_element_index, 'id']: dataframe.loc[second_element_index, 'sequence']}
                 # Combines the first protein key/value pair with the second protein key/value pair
                 both_elements = dict(first_element, **second_element)
                 count += 1
@@ -191,7 +192,7 @@ def generate_fastas():
                 write_fasta(both_elements, generate_dimers=dimers)
         print(count)
 
-    # Creates folder for results and changes to that folder
+    # Changes to dir for saving files
     os.chdir(fasta_result_path)
 
     # This block is simply for running the functions above
