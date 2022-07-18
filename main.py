@@ -227,10 +227,17 @@ def generate_pdbs():
         if os.path.exists(alphafold_result_path + '\\' + folder + '\\ranked_0.pdb'):
             shutil.copyfile(alphafold_result_path + '\\' + folder + '\\ranked_0.pdb',
                             piscore_data_path + '\\ranked_0.pdb')
-            new_file_name = '\\' + folder + '_0.pdb'
+            new_file_name = '\\' + folder + '.pdb'
             os.rename(piscore_data_path + '\\ranked_0.pdb', piscore_data_path + new_file_name)
         else:
             pass
+
+    print(df)
+    # Renames files to index value in df
+    for file in os.listdir(piscore_data_path):
+        for index in df.index:
+            if file.split('.')[0] == df.loc[index, 'protA_protB']:
+                os.rename(piscore_data_path + '\\' + file, piscore_data_path + '\\' + str(index) + '.pdb')
 
     # Update df with rankings for each protein set and their pLDDT score
     # Updates df with rank 0 for proteins that have completed the AlphaFold run
@@ -245,7 +252,8 @@ def generate_pdbs():
     # Parse ranking_debug.json for PLDDT scores and add to df
     for index in df.index:
         if df.loc[index, 'rank'] == '0':
-            with open(alphafold_result_path + '\\' + df.loc[index, 'protA_protB'] + '\\' + 'ranking_debug.json') as ranking_json:
+            with open(alphafold_result_path + '\\' + df.loc[index, 'protA_protB']
+                      + '\\' + 'ranking_debug.json') as ranking_json:
                 ranking_data = json.load(ranking_json)
                 ranking_data = list(ranking_data.values())[0]
                 ranks = []
@@ -253,8 +261,7 @@ def generate_pdbs():
                 ranks = ranks[0]
                 ranks.sort(reverse=True)
                 for index2 in df.index:
-                    if df.loc[index2, 'rank'] == '0' and (
-                            df.loc[index2, 'protA_protB'] == df.loc[index, 'protA_protB']):
+                    if df.loc[index2, 'rank'] == '0' and (df.loc[index2, 'protA_protB'] == df.loc[index, 'protA_protB']):
                         df.loc[index2, 'pLDDT'] = ranks[0]
                     else:
                         pass
@@ -264,4 +271,5 @@ def generate_pdbs():
 # Function adds results of PI scoring to df
 
 # Run functions
-# generate_fastas()
+#generate_fastas()
+generate_pdbs()
