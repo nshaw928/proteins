@@ -26,6 +26,7 @@ if first_time:
 data_path = home_path + '\\data'
 fasta_initial_path = data_path + '\\fasta_initial'
 fasta_result_path = data_path + '\\fasta_result'
+#alphafold_result_path = 'F:\\alphafold_data\\tz_full_results'
 alphafold_result_path = data_path + '\\alphafold_result'
 piscore_data_path = data_path + '\\piscore_data'
 piscore_result_path = data_path + '\\piscore_result'
@@ -61,7 +62,7 @@ def generate_fastas():
         "INVS": "Q9Y283",
         "NPHP3": "Q7Z494",
         "NEK8": "Q86SG6",
-        "ANKS6": "Q68BC2",
+        "ANKS6": "Q68DC2",
         "ANKS3": "Q6ZW76",
         "NPHP1": "O15259",
         "RPGRIP1L": "Q68CZ1",
@@ -291,5 +292,5 @@ def piscore_extract():
                 pass
 # Run functions
 #generate_fastas()
-#generate_pdbs()
-piscore_extract()
+generate_pdbs()
+#piscore_extract()
