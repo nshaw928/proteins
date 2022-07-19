@@ -273,7 +273,7 @@ def piscore_extract():
     # Load df from CSV
     df = pd.read_csv(data_path + '\\pre_piscore.csv')
     print(df)
-
+    df1 = pd.DataFrame({})
     for folder in os.listdir(piscore_result_path):
         for item in os.listdir(piscore_result_path + '\\' + folder):
             temp_path = piscore_result_path + '\\' + folder
@@ -283,9 +283,13 @@ def piscore_extract():
                     temp_path = piscore_result_path + '\\' + folder + '\\' + item
                     isdir = os.path.isdir(temp_path + '\\' + thing)
                     if isdir:
-                        print(temp_path + '\\' + thing)
+                        it_index = thing
+                    if thing.split('_')[0] == 'filter':
+                        df_temp = pd.read_csv(temp_path + '\\' + thing)
+                        print(df_temp)
             else:
                 pass
 # Run functions
 #generate_fastas()
 #generate_pdbs()
+piscore_extract()
