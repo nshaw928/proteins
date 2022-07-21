@@ -288,24 +288,25 @@ def piscore_extract():
                 pis_path = piscore_result_path + '\\' + folder + '\\' + 'pi_output'
                 # We need two files from this directory, the features and PIS
                 for data in os.listdir(pis_path):
+                    # Get features csv and add to df
                     if data.split('_')[0] == 'filter':
                         df_features = pd.read_csv(pis_path + '\\' + data)
                         df_features.rename(columns={'pdb': 'index'}, inplace=True)
-                        # This merge is very broken, check into it
+                        # Adds features to df the first time
                         if df.shape[1] == columns_df or df.shape[1] == (columns_df + 3):
-                            print('features if')
                             df = pd.merge(df, df_features, on='index', how='outer')
+                        # Adds features to df every other time
                         else:
-                            print('features else')
                             df = pd.concat([df, df_features], keys='index')
+                    # Get PIS csv and add to df
                     if data.split('_')[0] == 'pi':
                         df_pis = pd.read_csv(pis_path + '\\' + data)
                         df_pis.rename(columns={'#PDB': 'index'}, inplace=True)
+                        # Adds PIS to the df the first time
                         if df.shape[1] == columns_df or df.shape[1] == (columns_df + 12):
-                            print('pis if')
                             df = pd.merge(df, df_pis, on='index', how='outer')
+                        # Adds PIS to df every other time
                         else:
-                            print('pis else')
                             df = pd.concat([df, df_pis], keys='index')
                     else:
                         pass
