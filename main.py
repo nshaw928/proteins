@@ -273,24 +273,54 @@ def generate_pdbs():
 def piscore_extract():
     # Load df from CSV
     df = pd.read_csv(data_path + '\\pre_piscore.csv')
-    print(df)
-    df1 = pd.DataFrame({})
+    df.rename(columns={'Unnamed: 0': 'index'}, inplace=True)
     for folder in os.listdir(piscore_result_path):
+        pair_index = int(folder.split('_')[0])
         for item in os.listdir(piscore_result_path + '\\' + folder):
-            temp_path = piscore_result_path + '\\' + folder
-            isdir = os.path.isdir(temp_path + '\\' + item)
-            if isdir:
-                for thing in os.listdir(piscore_result_path + '\\' + folder + '\\' + item):
-                    temp_path = piscore_result_path + '\\' + folder + '\\' + item
-                    isdir = os.path.isdir(temp_path + '\\' + thing)
-                    if isdir:
-                        it_index = thing
-                    if thing.split('_')[0] == 'filter':
-                        df_temp = pd.read_csv(temp_path + '\\' + thing)
-                        print(df_temp)
+            if item == 'pi_output':
+                pis_path = piscore_result_path + '\\' + folder + '\\' + 'pi_output'
+                for data in os.listdir(pis_path):
+                    if data.split('_')[0] == 'filter':
+                        df_features = pd.read_csv(pis_path + '\\' + data)
+                        df_features.rename(columns={'pdb': 'index'}, inplace=True)
+                        df_features['index'] = pair_index
+                        # This merge is very broken, check into it
+                        df = pd.merge(df, df_features, on='index', how='left')
+                    if data.split('_')[0] == 'pi':
+                        df_pis = pd.read_csv(pis_path + '\\' + data)
+                        df_pis.rename(columns={'#PDB': 'index'}, inplace=True)
+                        print(df_pis)
+                    else:
+                        pass
+
+
             else:
                 pass
+
+
+
+
+#        temp_path = piscore_result_path + '\\' + folder
+#        isdir = os.path.isdir(temp_path + '\\' + item)
+#        if isdir:
+#            for thing in os.listdir(piscore_result_path + '\\' + folder + '\\' + item):
+#                temp_path = piscore_result_path + '\\' + folder + '\\' + item
+#                isdir = os.path.isdir(temp_path + '\\' + thing)
+#                if thing.split('_')[0] == 'filter':
+#                    df_temp = pd.read_csv(temp_path + '\\' + thing)
+#                    if isdir:
+#                        it_index = thing
+#                        for index in df.index:
+#                            print(df_temp)
+#                            if index == int(it_index):
+#                                print(df_temp)
+#                                pd.concat([df, df_temp], join='outer')
+#                            else:
+#                                pass
+#        else:
+#            pass
+    print(df)
 # Run functions
-#generate_fastas()
-generate_pdbs()
+generate_fastas()
+#generate_pdbs()
 #piscore_extract()
