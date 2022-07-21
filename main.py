@@ -330,7 +330,6 @@ def piscore_extract():
 
     # Save Dataframe for analysis
     df.to_csv(data_path + '\\pi_scores.csv')
-    print(df)
 # Run functions
 #generate_fastas()
 #generate_pdbs()
