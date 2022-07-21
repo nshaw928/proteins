@@ -320,7 +320,9 @@ def piscore_extract():
 #        else:
 #            pass
     print(df)
+
+
 # Run functions
-generate_fastas()
+#generate_fastas()
 #generate_pdbs()
 #piscore_extract()
