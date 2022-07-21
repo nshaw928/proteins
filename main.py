@@ -273,23 +273,40 @@ def generate_pdbs():
 def piscore_extract():
     # Load df from CSV
     df = pd.read_csv(data_path + '\\pre_piscore.csv')
+    # Rename first column to 'index' for matching later
     df.rename(columns={'Unnamed: 0': 'index'}, inplace=True)
+    # Save number of columns in df
+    columns_df = df.shape[1]
+
+    # Loop through folders to extract the data for PIS
     for folder in os.listdir(piscore_result_path):
+        # The folder name in the output is the index of the data frame where it needs to be saved
         pair_index = int(folder.split('_')[0])
         for item in os.listdir(piscore_result_path + '\\' + folder):
+            # This is the directory where our results are
             if item == 'pi_output':
                 pis_path = piscore_result_path + '\\' + folder + '\\' + 'pi_output'
+                # We need two files from this directory, the features and PIS
                 for data in os.listdir(pis_path):
                     if data.split('_')[0] == 'filter':
                         df_features = pd.read_csv(pis_path + '\\' + data)
                         df_features.rename(columns={'pdb': 'index'}, inplace=True)
-                        df_features['index'] = pair_index
                         # This merge is very broken, check into it
-                        df = pd.merge(df, df_features, on='index', how='left')
+                        if df.shape[1] == columns_df or df.shape[1] == (columns_df + 3):
+                            print('features if')
+                            df = pd.merge(df, df_features, on='index', how='outer')
+                        else:
+                            print('features else')
+                            df = pd.concat([df, df_features], keys='index')
                     if data.split('_')[0] == 'pi':
                         df_pis = pd.read_csv(pis_path + '\\' + data)
                         df_pis.rename(columns={'#PDB': 'index'}, inplace=True)
-                        print(df_pis)
+                        if df.shape[1] == columns_df or df.shape[1] == (columns_df + 12):
+                            print('pis if')
+                            df = pd.merge(df, df_pis, on='index', how='outer')
+                        else:
+                            print('pis else')
+                            df = pd.concat([df, df_pis], keys='index')
                     else:
                         pass
 
@@ -298,31 +315,8 @@ def piscore_extract():
                 pass
 
 
-
-
-#        temp_path = piscore_result_path + '\\' + folder
-#        isdir = os.path.isdir(temp_path + '\\' + item)
-#        if isdir:
-#            for thing in os.listdir(piscore_result_path + '\\' + folder + '\\' + item):
-#                temp_path = piscore_result_path + '\\' + folder + '\\' + item
-#                isdir = os.path.isdir(temp_path + '\\' + thing)
-#                if thing.split('_')[0] == 'filter':
-#                    df_temp = pd.read_csv(temp_path + '\\' + thing)
-#                    if isdir:
-#                        it_index = thing
-#                        for index in df.index:
-#                            print(df_temp)
-#                            if index == int(it_index):
-#                                print(df_temp)
-#                                pd.concat([df, df_temp], join='outer')
-#                            else:
-#                                pass
-#        else:
-#            pass
     print(df)
-
-
 # Run functions
 #generate_fastas()
 #generate_pdbs()
-#piscore_extract()
+piscore_extract()
