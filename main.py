@@ -26,7 +26,7 @@ if first_time:
 data_path = home_path + '\\data'
 fasta_initial_path = data_path + '\\fasta_initial'
 fasta_result_path = data_path + '\\fasta_result'
-#alphafold_result_path = 'F:\\alphafold_data\\tz_full_results'
+# alphafold_result_path = 'F:\\alphafold_data\\tz_full_results'
 alphafold_result_path = data_path + '\\alphafold_result'
 piscore_data_path = data_path + '\\piscore_data'
 piscore_result_path = data_path + '\\piscore_result'
@@ -323,14 +323,13 @@ def piscore_extract():
                             df.loc[pair_index, 'pi_score'] = df_pis.loc[0, 'pi_score']
                     else:
                         pass
-
-
             else:
                 pass
 
     # Save Dataframe for analysis
     df.to_csv(data_path + '\\pi_scores.csv')
+
 # Run functions
 #generate_fastas()
 #generate_pdbs()
-piscore_extract()
+#piscore_extract()
