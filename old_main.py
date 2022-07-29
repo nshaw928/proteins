@@ -5,7 +5,7 @@ import shutil
 import json
 
 # Set the protein complex to work on
-protein_complex = 'CrIFTB'
+protein_complex = 'CytC'
 
 # Check for data folder, and if it does not exist make it
 first_time = True
@@ -30,7 +30,7 @@ if first_time:
 data_path = home_path + '\\complexes\\' + protein_complex
 fasta_initial_path = data_path + '\\fasta_initial'
 fasta_result_path = data_path + '\\fasta_result'
-alphafold_result_path = 'F:\\alphafold_data\\CrIFTB_result'
+alphafold_result_path = 'F:\\alphafold_data\\CytC_result'
 # alphafold_result_path = data_path + '\\alphafold_result'
 piscore_data_path = data_path + '\\piscore_data'
 piscore_result_path = data_path + '\\piscore_result'
@@ -198,7 +198,7 @@ def generate_fastas():
                 count += 1
                 # Utilizes the write_fasta function to write the two proteins into one FASTA file
                 write_fasta(both_elements, generate_dimers=dimers)
-        print(count)
+        print('Fasta files generated: ' + count)
 
     # Changes to dir for saving files
     os.chdir(fasta_result_path)
@@ -336,4 +336,4 @@ def piscore_extract():
 # Run functions
 #generate_fastas()
 #generate_pdbs()
-#piscore_extract()
+piscore_extract()
