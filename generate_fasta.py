@@ -113,7 +113,7 @@ def first_with_all(dataframe):
     '''
     count = 0
     # Saves the first protein in the df as the first element
-    first_element = {dataframe.loc[0, 'id']: dataframe.loc[first_element_index, 'sequence']}
+    first_element = {dataframe.loc[0, 'id']: dataframe.loc[0, 'sequence']}
     # Loops through all other proteins in dataframe, pairing the first with every other
     for second_element_index in range(1, len(dataframe)):
         second_element = {
@@ -149,6 +149,7 @@ def generate_fasta(run_type, home_path, data_path, fasta_initial_path, fasta_res
     if run_type == 'all':
         # Generates all pairs of proteins
         all_pairs(df)
-    if run_type == '1_with_all'
+    if run_type == '1_with_all':
+        first_with_all(df)
     # Changes back to home directory
     os.chdir(home_path)
