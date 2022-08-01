@@ -26,7 +26,6 @@ def start(af_path, protein_complex):
     fasta_initial_path = data_path + '\\fasta_initial'
     fasta_result_path = data_path + '\\fasta_result'
     alphafold_result_path = af_path
-    # alphafold_result_path = data_path + '\\alphafold_result'
     piscore_data_path = data_path + '\\piscore_data'
     piscore_result_path = data_path + '\\piscore_result'
 
