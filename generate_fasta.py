@@ -105,10 +105,31 @@ def all_pairs(dataframe):
     print('Fasta files generated: ' + str(count))
 
 
-def generate_fasta(run_pairs, home_path, data_path, fasta_initial_path, fasta_result_path):
+def first_with_all(dataframe):
+    '''
+    Generates FASTA files for the first protein in the intial fasta against every other protein
+    :param dataframe: dataframe containing id and sequence information
+    :return: outputs fasta
+    '''
+    count = 0
+    # Saves the first protein in the df as the first element
+    first_element = {dataframe.loc[0, 'id']: dataframe.loc[first_element_index, 'sequence']}
+    # Loops through all other proteins in dataframe, pairing the first with every other
+    for second_element_index in range(1, len(dataframe)):
+        second_element = {
+            dataframe.loc[second_element_index, 'id']: dataframe.loc[second_element_index, 'sequence']}
+        # Combines the first protein key/value pair with the second protein key/value pair
+        both_elements = dict(first_element, **second_element)
+        count += 1
+        # Utilizes the write_fasta function to write the two proteins into one FASTA file
+        write_fasta(both_elements, dimers=True)
+    print('Fasta files generated: ' + str(count))
+
+
+def generate_fasta(run_type, home_path, data_path, fasta_initial_path, fasta_result_path):
     '''
 
-    :param run_pairs: if true, all possible protein pairs will be generated
+    :param run_type: determines how the proteins are combined into files
     :param home_path: str of home path
     :param data_path: str of path to data folder specific for complex
     :param fasta_initial_path: str of path where file.fasta is saved
@@ -125,9 +146,9 @@ def generate_fasta(run_pairs, home_path, data_path, fasta_initial_path, fasta_re
     os.chdir(fasta_result_path)
 
     # Logic to determine how the proteins are combined to create FASTA files
-    if run_pairs:
+    if run_type == 'all':
         # Generates all pairs of proteins
         all_pairs(df)
-
+    if run_type == '1_with_all'
     # Changes back to home directory
     os.chdir(home_path)
