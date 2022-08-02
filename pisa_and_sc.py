@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 
-pisa_path = 'C:\\Users\\nshaw\\CCP4-8\\8.0\\bin\\pisa.exe'
+pisa_path = '/home/nis806/CCP4/ccp4-8.0/bin/pisa'
 
 def run_pisa(pdbfile):
     '''
@@ -23,4 +23,4 @@ def run_sc():
     # First line
 
 
-run_pisa(pdbfile='C:\\Users\\nshaw\\OneDrive\\Desktop\\0.pdb')
+run_pisa(pdbfile='/home/nis806/Desktop/4.pdb')
