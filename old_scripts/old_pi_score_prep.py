@@ -7,7 +7,7 @@ import json
 
 # Create new folder for saving results and save paths to relevant datasets
 # Open dataset folder and create folder to save results
-os.chdir('datasets')
+os.chdir('../datasets')
 datasets_path = os.getcwd()
 # Save path to folder for copying our ranked pdbs
 newpath = 'pdbs_for_pi_scoring'

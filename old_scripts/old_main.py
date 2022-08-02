@@ -18,7 +18,7 @@ for item in os.listdir(home_path + '\\complexes'):
         pass
 # If the data folder does not exist make it and the other sub folders
 if first_time:
-    os.chdir('complexes')
+    os.chdir('../complexes')
     os.makedirs(protein_complex)
     os.chdir(protein_complex)
     dirs = ['fasta_initial', 'fasta_result', 'alphafold_result', 'piscore_data', 'piscore_result']
