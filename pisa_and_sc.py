@@ -1,6 +1,7 @@
 import os
+import pandas as pd
 
-pisa_path =
+pisa_path = 'C:\\Users\\nshaw\\CCP4-8\\8.0\\bin\\pisa.exe'
 
 def run_pisa(pdbfile):
     '''
@@ -12,9 +13,14 @@ def run_pisa(pdbfile):
     os.system(pisa_path + ' name -analyse ' + pdbfile)
     os.system('pisa name -xml interfaces >' + file_name)
     os.system('pisa name -erase')
-    print()
+    print(file_name)
+
 
 
 
 def run_sc():
+    pass
     # First line
+
+
+run_pisa(pdbfile='C:\\Users\\nshaw\\OneDrive\\Desktop\\0.pdb')
