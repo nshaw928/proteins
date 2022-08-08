@@ -4,11 +4,11 @@ from generate_pdbs_from_af import generate_pdbs_from_af
 from extract_piscore import extract_piscore
 
 # Set which protein complex you are working on
-protein_complex = 'zync_finger_with_IFTB'
+protein_complex = '172_IFTA'
 
 # Run start function to create folders and set save paths
 home_path, data_path, fasta_initial_path, fasta_result_path, alphafold_result_path, piscore_data_path,\
-    piscore_result_path = start(af_path='C:\\Users\\nshaw\\OneDrive\\Desktop\\Projects\\proteins\\complexes'
+    piscore_result_path, pdb_for_dropbox = start(af_path='C:\\Users\\nshaw\\OneDrive\\Desktop\\Projects\\proteins\\complexes'
                                         '\\zync_finger_with_IFTB\\alphafold_result', protein_complex=protein_complex)
 
 # Run generate_fasta function to generate fasta files to be used as AlphaFold input
@@ -20,4 +20,4 @@ generate_pdbs_from_af(fasta_result_path=fasta_result_path, alphafold_result_path
                       piscore_data_path=piscore_data_path, data_path=data_path)
 
 # Extracts pi score from the results of pi score program
-extract_piscore(data_path=data_path, piscore_result_path=piscore_result_path)
+#extract_piscore(data_path=data_path, piscore_result_path=piscore_result_path)
