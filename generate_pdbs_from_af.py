@@ -4,7 +4,7 @@ import shutil
 import json
 
 
-def generate_pdbs_from_af(fasta_result_path, alphafold_result_path, piscore_data_path, data_path):
+def generate_pdbs_from_af(fasta_result_path, alphafold_result_path, piscore_data_path, data_path, pdb_for_dropbox):
 
     # Create DataFrame using test data set to check for AlphaFold success or which ones need run again
     df = pd.DataFrame({'protA_protB': [], 'protA': [], 'protB': [], 'rank': [], 'pLDDT': []})
@@ -21,10 +21,17 @@ def generate_pdbs_from_af(fasta_result_path, alphafold_result_path, piscore_data
         df = pd.concat([df, temp_df], ignore_index=True)
 
     # Saved ranked pdbs in new folder with name protA_protB_#.pdb (created earlier)
+
     for folder in os.listdir(alphafold_result_path):
         if os.path.exists(alphafold_result_path + '\\' + folder + '\\ranked_0.pdb'):
+            # Saves copy for renaming to index
             shutil.copyfile(alphafold_result_path + '\\' + folder + '\\ranked_0.pdb',
                             piscore_data_path + '\\ranked_0.pdb')
+            new_file_name = '\\' + folder + '.pdb'
+            os.rename(piscore_data_path + '\\ranked_0.pdb', piscore_data_path + new_file_name)
+            # Saves copy for uploading to dropbox
+            shutil.copyfile(alphafold_result_path + '\\' + folder + '\\ranked_0.pdb',
+                            pdb_for_dropbox + '\\ranked_0.pdb')
             new_file_name = '\\' + folder + '.pdb'
             os.rename(piscore_data_path + '\\ranked_0.pdb', piscore_data_path + new_file_name)
         else:
