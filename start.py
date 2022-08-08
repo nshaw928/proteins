@@ -16,7 +16,7 @@ def start(af_path, protein_complex):
         os.chdir('complexes')
         os.makedirs(protein_complex)
         os.chdir(protein_complex)
-        dirs = ['fasta_initial', 'fasta_result', 'alphafold_result', 'piscore_data', 'piscore_result']
+        dirs = ['fasta_initial', 'fasta_result', 'alphafold_result', 'pdb_for_dropbox', 'piscore_data', 'piscore_result']
         for folder in dirs:
             os.makedirs(folder)
         os.chdir(home_path)
@@ -26,7 +26,8 @@ def start(af_path, protein_complex):
     fasta_initial_path = data_path + '\\fasta_initial'
     fasta_result_path = data_path + '\\fasta_result'
     alphafold_result_path = af_path
+    pdb_for_dropbox = data_path + '\\pdb_for_dropbox'
     piscore_data_path = data_path + '\\piscore_data'
     piscore_result_path = data_path + '\\piscore_result'
 
-    return home_path, data_path, fasta_initial_path, fasta_result_path, alphafold_result_path, piscore_data_path, piscore_result_path
+    return home_path, data_path, fasta_initial_path, fasta_result_path, alphafold_result_path, piscore_data_path, piscore_result_path, pdb_for_dropbox
