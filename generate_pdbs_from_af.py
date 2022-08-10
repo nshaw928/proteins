@@ -33,7 +33,7 @@ def generate_pdbs_from_af(fasta_result_path, alphafold_result_path, piscore_data
             shutil.copyfile(alphafold_result_path + '\\' + folder + '\\ranked_0.pdb',
                             pdb_for_dropbox + '\\ranked_0.pdb')
             new_file_name = '\\' + folder + '.pdb'
-            os.rename(piscore_data_path + '\\ranked_0.pdb', piscore_data_path + new_file_name)
+            os.rename(pdb_for_dropbox + '\\ranked_0.pdb', pdb_for_dropbox + new_file_name)
         else:
             pass
 
