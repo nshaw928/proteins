@@ -14,6 +14,7 @@ def check_exists_by_name(name, cur_driver):
 
 # Set vars
 pdb_file = 'C:\\Users\\nshaw\\OneDrive\\Desktop\\Projects\\proteins\\datasets\\test_results\\hbb_hba\\ranked_0.pdb'
+xml_files_path = 'datasets/xml_files'
 
 # Load Firefox without GUI
 opts = Options()
@@ -51,13 +52,16 @@ if driver.find_element(by=By.CLASS_NAME, value='phead').text.startswith('No'):
 else:
     while not check_exists_by_name('downloadXML', driver):
         pass
-    print(driver)
+    # Get XML data
     driver.find_element(by=By.NAME, value='downloadXML').click()
-    driver.implicitly_wait(2)
+    driver.implicitly_wait(1)
+    # Go to window with XML data
     driver.switch_to.window(driver.window_handles[1])
-    xml = driver.current_url
-    print(xml)
+    xml_url = driver.current_url
 
-
-
+    # Saves name of input file for identification
+    file_name = pdb_file.split('\\')[-1].split('.')[0]
+    print(driver.page_source)
+    with open(xml_files_path + '/' + file_name + '.xml', 'w') as file:
+        file.write(driver.page_source)
 
