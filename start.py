@@ -26,8 +26,8 @@ def start(af_path, protein_complex):
     fasta_initial_path = data_path + '\\fasta_initial'
     fasta_result_path = data_path + '\\fasta_result'
     alphafold_result_path = af_path
-    pdb_for_dropbox = data_path + '\\pdb_for_dropbox'
+    pdb_for_dropbox_path = data_path + '\\pdb_for_dropbox'
     piscore_data_path = data_path + '\\piscore_data'
     piscore_result_path = data_path + '\\piscore_result'
 
-    return home_path, data_path, fasta_initial_path, fasta_result_path, alphafold_result_path, piscore_data_path, piscore_result_path, pdb_for_dropbox
+    return home_path, data_path, fasta_initial_path, fasta_result_path, alphafold_result_path, piscore_data_path, piscore_result_path, pdb_for_dropbox_path
