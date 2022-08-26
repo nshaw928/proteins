@@ -28,6 +28,8 @@ def parse_xml(path_to_xml):
     # Save the p value associated with the delta g of the interaction
     feature_deltagpvalue = (df.loc[4]['INTERFACEDELTAGPVALUE'])
 
+    feature_avgresidues = (((df.loc[4]['INTERFACENRESIDUES1']) + (df.loc[4]['INTERFACENRESIDUES1'])) / 2)
+
     df = pd.DataFrame({
         'protA_protB': [proteins],
         'hbonds': [feature_hbonds],
@@ -35,7 +37,9 @@ def parse_xml(path_to_xml):
         'disulfides': [feature_disulfides],
         'deltag': [feature_deltag],
         'pvalue': [feature_deltagpvalue],
+        'avg_residues': [feature_avgresidues],
     })
+    print(df)
     return df
 
 xml_path = 'datasets\\xml_files\\ranked_0.xml'
