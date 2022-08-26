@@ -4,7 +4,7 @@ import pandas as pd
 def parse_xml(path_to_xml):
     '''
     Specifically designed to parse a PISA generated xml file
-    :return:
+    :return: a df containing select interface features
     '''
 
     df = pd.read_xml(path_to_xml)
@@ -33,7 +33,16 @@ def parse_xml(path_to_xml):
 
     # Save the p value associated with the delta g of the interaction
     feature_deltagpvalue = (df.loc[4]['INTERFACEDELTAGPVALUE'])
-    print(feature_deltagpvalue)
+
+    df = pd.DataFrame({
+        'protA_protB': [proteins],
+        'hbonds': [feature_hbonds],
+        'saltbridges': [feature_saltbridges],
+        'disulfides': [feature_disulfides],
+        'deltag': [feature_deltag],
+        'pvalue': [feature_deltagpvalue],
+    })
+    return df
 
 xml_path = 'datasets\\xml_files\\ranked_0.xml'
 parse_xml(xml_path)
