@@ -1,5 +1,10 @@
 import pandas as pd
 
+from selenium.webdriver import Firefox
+from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException
+
 # Parse XML file and extract relevant interface information
 def parse_xml(path_to_xml):
     '''
@@ -47,11 +52,6 @@ def parse_xml(path_to_xml):
 
 
 # Start of web crawler
-from selenium.webdriver import Firefox
-from selenium.webdriver.firefox.options import Options
-from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException
-
 def run_pisa(pdb_file, xml_files_path):
 
     # Checks if an element exists on the current page
