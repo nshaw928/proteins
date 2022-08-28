@@ -15,7 +15,7 @@ def parse_xml(path_to_xml):
     xml_df = pd.read_xml(path_to_xml)
 
     with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
-        print(xml_df)started
+        print(xml_df)
 
     # Save name of the two proteins participating in the interaction
     proteins = (xml_df.loc[0]['STRUCTURENAME']).split('.')[0]
