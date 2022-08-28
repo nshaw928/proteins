@@ -11,5 +11,5 @@ xml_files_path = 'datasets/xml_files'
 #run_pisa(pdb_file, xml_files_path)
 
 # Get dataframe from XML file
-xml_path = 'datasets/xml_files/ranked_0.xml'
+xml_path = 'datasets/xml_files/1A3L.xml'
 parse_xml(xml_path)
