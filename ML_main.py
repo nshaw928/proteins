@@ -1,4 +1,4 @@
-from utils import parse_xml, run_pisa
+from utils import parse_xml, run_pisa, compile_features
 
 # General Imports
 import pandas as pd
@@ -10,8 +10,9 @@ pdb_file = 'C:\\Users\\nshaw\\OneDrive\\Desktop\\Projects\\proteins\\datasets\\t
 xml_files_path = 'datasets/xml_files'
 #run_pisa(pdb_file, xml_files_path)
 
-# Get dataframe from XML file
-xml_path = 'datasets/xml_files/1A3L.xml'
-parse_xml(xml_path)
+# Compile all xml files into single df
+path_to_xml_folder = 'datasets/xml_files'
+compile_features(path_to_xml_folder)
+print('FINSIHED MAIN')
 
 
