@@ -147,13 +147,15 @@ def run_pisa(pdb_file, xml_files_path):
         driver.implicitly_wait(1)
         # Go to window with XML data
         driver.switch_to.window(driver.window_handles[1])
-        xml_url = driver.current_url
 
         # Saves name of input file for identification
         file_name = pdb_file.split('\\')[-1].split('.')[0]
         print(driver.page_source)
         with open(xml_files_path + '/' + file_name + '.xml', 'w') as file:
             file.write(driver.page_source)
+
+    # Quit driver
+    driver.quit()
 
 # Compile features from all xml files (uses function parse_xml)
 def compile_features(path_to_xml_folder):
