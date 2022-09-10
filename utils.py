@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+import time
 
 from selenium.webdriver import Firefox
 from selenium.webdriver.firefox.options import Options
@@ -147,6 +148,7 @@ def run_pisa(pdb_file, xml_files_path):
         driver.implicitly_wait(1)
         # Go to window with XML data
         driver.switch_to.window(driver.window_handles[1])
+        time.sleep(3)
 
         # Saves name of input file for identification
         file_name = pdb_file.split('\\')[-1].split('.')[0]
