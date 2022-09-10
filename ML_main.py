@@ -2,17 +2,20 @@ from utils import parse_xml, run_pisa, compile_features
 
 # General Imports
 import pandas as pd
+import os
 
 
 
 # Run PISA
-pdb_file = 'C:\\Users\\nshaw\\OneDrive\\Desktop\\Projects\\proteins\\datasets\\test_results\\hbb_hba\\ranked_0.pdb'
-xml_files_path = 'datasets/xml_files'
-#run_pisa(pdb_file, xml_files_path)
+pdb_folder = 'D:\\Data\\Aug26_PDB'
+xml_files_path = 'datasets/xml_files/Sep7'
+for file in os.listdir(pdb_folder):
+    file_name = pdb_folder + '\\' + file
+    run_pisa(file_name, xml_files_path)
 
 # Compile all xml files into single df
 path_to_xml_folder = 'datasets/xml_files'
-compile_features(path_to_xml_folder)
+#compile_features(path_to_xml_folder)
 print('FINSIHED MAIN')
 
 
