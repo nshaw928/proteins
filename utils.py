@@ -96,6 +96,31 @@ def parse_xml(path_to_xml):
     # Returns new_df which is a single row summarizing the interaction
     return new_df
 
+# Compile features from all xml files (uses function parse_xml)
+def compile_features(path_to_xml_folder):
+    # Define the master df that all interactions will be saved in
+    df_final = pd.DataFrame({
+        'protA_protB': [],
+        'hbonds': [],
+        'saltbridges': [],
+        'disulfides': [],
+        'deltag': [],
+        'avg_residues': [],
+    })
+
+    # Loops that goes through the folder with xml files and passes each file to parse_xml
+    for file in os.listdir(path_to_xml_folder):
+        # Save the full path to the file
+        file_path = path_to_xml_folder + '/' + file
+
+        # Run parse_xml and save to temp_df
+        temp_df = parse_xml(file_path)
+
+        # Add temp_df to the master df, df
+        df_final = pd.concat([df_final, temp_df])
+
+    print('FINISH')
+
 # Start of web crawler
 # This does not work. The web server does not like massive amounts of requests
 def run_pisa_online(pdb_file, xml_files_path):
@@ -159,28 +184,3 @@ def run_pisa_online(pdb_file, xml_files_path):
 
     # Quit driver
     driver.quit()
-
-# Compile features from all xml files (uses function parse_xml)
-def compile_features(path_to_xml_folder):
-    # Define the master df that all interactions will be saved in
-    df_final = pd.DataFrame({
-        'protA_protB': [],
-        'hbonds': [],
-        'saltbridges': [],
-        'disulfides': [],
-        'deltag': [],
-        'avg_residues': [],
-    })
-
-    # Loops that goes through the folder with xml files and passes each file to parse_xml
-    for file in os.listdir(path_to_xml_folder):
-        # Save the full path to the file
-        file_path = path_to_xml_folder + '/' + file
-
-        # Run parse_xml and save to temp_df
-        temp_df = parse_xml(file_path)
-
-        # Add temp_df to the master df, df
-        df_final = pd.concat([df_final, temp_df])
-
-    print('FINISH')
