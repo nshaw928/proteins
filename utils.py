@@ -97,7 +97,8 @@ def parse_xml(path_to_xml):
     return new_df
 
 # Start of web crawler
-def run_pisa(pdb_file, xml_files_path):
+# This does not work. The web server does not like massive amounts of requests
+def run_pisa_online(pdb_file, xml_files_path):
 
     # Checks if an element exists on the current page
     def check_exists_by_name(name, cur_driver):
@@ -162,7 +163,7 @@ def run_pisa(pdb_file, xml_files_path):
 # Compile features from all xml files (uses function parse_xml)
 def compile_features(path_to_xml_folder):
     # Define the master df that all interactions will be saved in
-    df = pd.DataFrame({
+    df_final = pd.DataFrame({
         'protA_protB': [],
         'hbonds': [],
         'saltbridges': [],
@@ -180,6 +181,6 @@ def compile_features(path_to_xml_folder):
         temp_df = parse_xml(file_path)
 
         # Add temp_df to the master df, df
-        df = pd.concat([df, temp_df])
+        df_final = pd.concat([df_final, temp_df])
 
     print('FINISH')
