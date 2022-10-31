@@ -7,6 +7,16 @@ from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 
+# Designed to run PISA from the linux command line installed through CCP4
+def run_pisa(path_to_pdb_folder):
+    # Navigate to correct path
+    os.system('cd Documents/Programs/ccp4-8.0/bin')
+    for file in os.listdir():
+        os.system('./pisa name -analyse ' + file)
+        output_file = file.split('.')[0] + '_pisa.xml'
+        os.system('./pisa name -xml interfaces >' + output_file)
+
+
 # Parse XML file and extract relevant interface information
 def parse_xml(path_to_xml):
     '''
