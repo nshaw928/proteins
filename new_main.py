@@ -5,8 +5,8 @@ from extract_piscore import extract_piscore
 import os
 
 # Set which protein complex you are working on
-protein_complex = 'CytC'
-af = 'F:\\alphafold_data\\CytC_result'
+protein_complex = 'Oct31'
+af = 'E:\\alphafold_data\\oct31_result'
 
 home_path = os.getcwd()
 
