@@ -94,7 +94,7 @@ def parse_xml(path_to_xml):
         'hbonds': [sum_hbonds],
         'saltbridges': [sum_saltbridges],
         'area': [sum_area],
-        'deltag': [deltag],
+        'deltag': [sum_deltag],
         'tot_res': [sum_tot_res],
     })
 
