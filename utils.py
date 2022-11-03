@@ -35,7 +35,7 @@ def parse_xml(path_to_xml):
         'pvalue': [],
         'hbonds': [],
         'saltbridges': [],
-        'avg_res': [],
+        'tot_res': [],
     })
 
     # Separate each interface and extract features
@@ -75,8 +75,14 @@ def parse_xml(path_to_xml):
     # Filters out small interfaces
     df = df[df['tot_res'] > 2]
 
+    # Converts columns to floats for compatability
+    df['area'] = df['area'].astype(float)
+    df['deltag'] = df['deltag'].astype(float)
+    df['pvalue'] = df['pvalue'].astype(float)
+
     # Add weighted delta G to new column
-    df['weighted_deltag'] = int(df.deltag) * int(df.tot_res)
+    weighted_deltag = df.deltag * df.tot_res
+    df['weighted_deltag'] = weighted_deltag
 
     # Summarize the interface data into a single row
     # Save summaries of features as vars
@@ -87,7 +93,7 @@ def parse_xml(path_to_xml):
     deltag_interaction = ((df['weighted_deltag'].sum()) / (sum_tot_res))
 
     # Summarize df in single row of new_df
-    new_df = pd.DataFrame({
+    summary_df = pd.DataFrame({
         'protA_protB': [proteins],
         'hbonds': [sum_hbonds],
         'saltbridges': [sum_saltbridges],
@@ -97,7 +103,7 @@ def parse_xml(path_to_xml):
     })
 
     # Returns new_df which is a single row summarizing the interaction
-    return new_df
+    return summary_df
 
 # Parse XML file and extract relevant interface information
 def parse_xml_fromweb(path_to_xml):
@@ -195,9 +201,9 @@ def compile_features(path_to_xml_folder):
         'protA_protB': [],
         'hbonds': [],
         'saltbridges': [],
-        'disulfides': [],
+        'area': [],
         'deltag': [],
-        'avg_residues': [],
+        'tot_res': [],
     })
 
     # Loops that goes through the folder with xml files and passes each file to parse_xml
