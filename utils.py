@@ -3,25 +3,22 @@ import os
 import time
 import xml.etree.ElementTree as ET
 
-from selenium.webdriver import Firefox
-from selenium.webdriver.firefox.options import Options
-from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException
 
 # Designed to run PISA from the linux command line installed through CCP4
 def run_pisa(path_to_data_folder):
-    # Navigate to correct path
-    os.system('cd opt/xtal/ccp4-8.0')
-    os.system('./start')
-    os.system('cd bin')
 
     # Specify where you want the results to go
-    result_path = '/home/shaw928/Documents/results/Aug26_PDB/'
+    result_path = '/home/nshaw928/Documents/results/Aug26_PDB/'
+
+    # Navigate to correct path
+    os.chdir('/opt/xtal/ccp4-8.0')
+    print(os.getcwd())
+    os.system('bin/ccp4.setup-sh')
 
     for file in os.listdir(path_to_data_folder):
-        os.system('./pisa name -analyse ' + file)
+        os.system('/opt/xtal/ccp4-8.0/bin/pisa name -analyse ' + file)
         output_file_path = result_path + file.split('.')[0] + '_pisa.xml'
-        os.system('./pisa name -xml interfaces >' + output_file_path)
+        os.system('pisa name -xml interfaces >' + output_file_path)
         os.system('pisa name -erase')
 
 # NEW PARSE FUNCTION
