@@ -4,19 +4,18 @@ from utils import run_pisa, parse_xml, compile_features
 import pandas as pd
 import os
 
-test_xml = 'data/117e_outfile'
-
-parse_xml(test_xml)
-
+#test_xml = 'data/117e_outfile'
+#parse_xml(test_xml)
 
 
-
+folder = ''
+run_pisa(folder)
 
 
 
 # Run PISA
-pdb_folder = 'D:\\Data\\Aug26_PDB'
-xml_files_path = 'data/xml_files/Sep7'
+#pdb_folder = 'D:\\Data\\Aug26_PDB'
+#xml_files_path = 'data/xml_files/Sep7'
 
 #for file in os.listdir(pdb_folder):
 #    file_name = pdb_folder + '\\' + file

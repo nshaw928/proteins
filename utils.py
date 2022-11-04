@@ -11,11 +11,13 @@ from selenium.common.exceptions import NoSuchElementException
 # Designed to run PISA from the linux command line installed through CCP4
 def run_pisa(path_to_pdb_folder):
     # Navigate to correct path
-    os.system('cd Documents/Programs/ccp4-8.0/bin')
+    os.system('cd opt/xtal/ccp4-8.0')
+    os.system('./start')
     for file in os.listdir():
         os.system('./pisa name -analyse ' + file)
         output_file = file.split('.')[0] + '_pisa.xml'
         os.system('./pisa name -xml interfaces >' + output_file)
+        os.system('pisa name -erase')
 
 # NEW PARSE FUNCTION
 def parse_xml(path_to_xml):
