@@ -8,7 +8,7 @@ import os
 #parse_xml(test_xml)
 
 
-folder = ''
+folder = '/home/shaw928/Documents/data/Aug26_PDB'
 run_pisa(folder)
 
 
